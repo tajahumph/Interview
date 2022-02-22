@@ -1,32 +1,43 @@
 package com.nextgear.tannerinterviewproject.contract;
 
-import java.util.UUID;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Contract 
+@Entity
+@Table(name = "contract")
+public class Contract implements Serializable
 {
-    private final UUID contractId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(nullable = false, updatable = false)
+    private Long contractId;
     private String name;
-
-
     private int businessNumber;
     private int amountRequested;
-    private final boolean acceptDeny;
+    @Column(updatable = false)
+    private final boolean approved;
+    @Column(updatable = false)
     private final String contractActivationDate;
 
     public Contract() 
     {
-        this.contractId = UUID.randomUUID();
+        //this.contractId = UUID.randomUUID();
         this.name = "Place Holder";
         this.businessNumber = 0;
         this.amountRequested = 0;
-        this.acceptDeny = false;
+        this.approved = false;
         this.contractActivationDate = "";
     }
 
     public Contract(String name, int businessNumber, int amountRequested)
     {
-        this.contractId = UUID.randomUUID();
+        //this.contractId = UUID.randomUUID();
         this.name = name;
         this.businessNumber = businessNumber;
         this.amountRequested = amountRequested;
@@ -34,36 +45,17 @@ public class Contract
         {
             Date currentDate = new Date();
             this.contractActivationDate = currentDate.toString();
-            this.acceptDeny = true;
+            this.approved = true;
         }
         else
         {
             this.contractActivationDate = "";
-            this.acceptDeny = false;
+            this.approved = false;
         }
 
     }
 
-    public Contract(UUID contractId, String name, int businessNumber, int amountRequested)
-    {
-        this.contractId = contractId;
-        this.name = name;
-        this.businessNumber = businessNumber;
-        this.amountRequested = amountRequested;
-        if(amountRequested < 50000)
-        {
-            Date currentDate = new Date();
-            this.contractActivationDate = currentDate.toString();
-            this.acceptDeny = true;
-        }
-        else
-        {
-            this.contractActivationDate = "";
-            this.acceptDeny = false;
-        }
-    }
-
-    public UUID getContractId()
+    public Long getContractId()
     {
         return contractId;
     }
@@ -81,14 +73,14 @@ public class Contract
         return amountRequested;
     }
 
-    public boolean isAcceptDeny() {
-        return acceptDeny;
+    public boolean isApproved() {
+        return approved;
     }
 
     public String getContractActivationDate() {
         return contractActivationDate;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
