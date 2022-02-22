@@ -10,47 +10,48 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "contract")
+@Table(name = "contracts")
 public class Contract implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(nullable = false, updatable = false)
+    @Column(name = "contractId", nullable = false, updatable = false)
     private Long contractId;
+    @Column(name = "name") 
     private String name;
+    @Column(name = "businessNumber") 
     private int businessNumber;
-    private int amountRequested;
-    @Column(updatable = false)
-    private final boolean approved;
-    @Column(updatable = false)
-    private final String contractActivationDate;
+    @Column(name = "amountRequested")
+    private float amountRequested;
+    @Column(name = "contractApproved", updatable = false)
+    private boolean contractApproved;
+    @Column(name = "contractActivationDate", updatable = false)
+    private String contractActivationDate;
 
     public Contract() 
     {
-        //this.contractId = UUID.randomUUID();
         this.name = "Place Holder";
         this.businessNumber = 0;
         this.amountRequested = 0;
-        this.approved = false;
+        this.contractApproved = false;
         this.contractActivationDate = "";
     }
 
     public Contract(String name, int businessNumber, int amountRequested)
     {
-        //this.contractId = UUID.randomUUID();
         this.name = name;
         this.businessNumber = businessNumber;
         this.amountRequested = amountRequested;
-        if(amountRequested < 50000)
+        if(this.amountRequested < 50000)
         {
             Date currentDate = new Date();
             this.contractActivationDate = currentDate.toString();
-            this.approved = true;
+            this.contractApproved = true;
         }
         else
         {
             this.contractActivationDate = "";
-            this.approved = false;
+            this.contractApproved = false;
         }
 
     }
@@ -69,12 +70,12 @@ public class Contract implements Serializable
     {
         return businessNumber;
     }
-    public int getAmountRequested() {
+    public float getAmountRequested() {
         return amountRequested;
     }
 
-    public boolean isApproved() {
-        return approved;
+    public boolean isContractApproved() {
+        return contractApproved;
     }
 
     public String getContractActivationDate() {
