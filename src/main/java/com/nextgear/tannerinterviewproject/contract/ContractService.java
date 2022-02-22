@@ -1,35 +1,52 @@
 package com.nextgear.tannerinterviewproject.contract;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ContractService 
 {
-    private List<Contract> contracts = new ArrayList<>(
-        Arrays.asList(
-            new Contract("Bob A. Fett", 1, 40000),
-            new Contract("Tony Stark", 2, 10000000),
-            new Contract("Sam Wilson", 3, 39999),
-            new Contract("Miles Morales", 4, 50000)
-        )
-    ); //add contracts from DB later
+    @Autowired
+    private ContractRepository contractRepository;
 
-    public List<Contract> getContracts()
+    public List<Contract> getApprovedContracts()
     {
-        return List.of(new Contract("Bob A. Fett", 501, 49999));
-    }
-
-    public Contract getContract()
-    {
-        return new Contract("Bob A. Fett", 501, 23000);
+        List<Contract> contracts = new ArrayList<>();
+        List<Contract> approvedContract = new ArrayList<>();
+        contractRepository.findAll().forEach(contracts::add);
+        for(Contract contract : contracts)
+        {
+            if(contract.isContractApproved())
+            {
+                approvedContract.add(contract);
+            }
+        }
+        return contracts;
+        //return  contractRepository.findApprovedContracts();
     }
 
     public Contract getContract(Long id)
     {
-        return contracts.stream().filter(contract -> contract.getContractId().equals(id)).findFirst().get();
+        Optional<Contract> contract = contractRepository.findById(id);
+        return contract.get();
+    }
+
+    public void createContract(Contract contract)
+    {
+        Contract contract1 = contractRepository.save(contract);
+        System.out.println(contract1.getName());
+    }
+
+    public void updateContract(Contract contract, Long id)
+    {
+        contractRepository.save(contract);
+    }
+
+    public void deleteContract(Long id)
+    {
+        contractRepository.deleteById(id);
     }
 }

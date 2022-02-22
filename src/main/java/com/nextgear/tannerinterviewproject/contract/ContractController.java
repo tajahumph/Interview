@@ -1,46 +1,54 @@
 package com.nextgear.tannerinterviewproject.contract;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/contract")
+@RequestMapping(path = "api/interview")
 public class ContractController {
     
     @Autowired
-    private final ContractService contractService;
+    private ContractService contractService;
 
-    public ContractController(ContractService contractService)
+    @GetMapping("/contracts") //Return all approved contracts
+    public List<Contract> getApprovedContracts()
     {
-        this.contractService = contractService;
+            return contractService.getApprovedContracts();
     }
 
-    @GetMapping("contracts") //Return all approved contracts, *Not done
-    public List<Contract> getContracts()
-    {
-        return contractService.getContracts();
-    }
-
-    @GetMapping("contract/{id}") //Return a single contract, *Not Done
+    @GetMapping("/contract/{id}") //Return a single contract
     public Contract getContract(@PathVariable Long contractId)
     {
         return contractService.getContract(contractId);
     }
 
-    @PostMapping //Create new contracts, *Not Done
-    public void createContract(Contract contract)
+    @PostMapping("/createContract") //Create new contracts
+    public void createContract(@RequestBody Contract contract)
     {
-
+        System.out.println(contract.getName());
+        contractService.createContract(contract);
     }
 
-    @PutMapping //update existing contracts, *Not Done
-    public void updateContract(Contract contract)
-    {}
+    @PutMapping("/updateContract/{id}") //update existing contracts, *Not Done
+    public void updateContract(@RequestBody Contract contract, Long contractId)
+    {
+        contractService.updateContract(contract, contractId);
+    }
+
+    @DeleteMapping("/deleteContract/{id}")
+    public void deleteContract(@PathVariable Long contractId)
+    {
+        contractService.deleteContract(contractId);
+        //return new ResponseEntity<String>("Contract " + contractId + " successfully deleted", null);
+    }
 
 }
