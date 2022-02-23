@@ -35,15 +35,6 @@ public class ContractController {
     @PostMapping("/createContract")
     public ResponseEntity<String> createContract(@RequestBody Contract contract)
     {
-        System.out.println(contract.getName());
-        if(contract.getAmountRequested() < 50000) //magic number for temporary work, I'd typically use a set variable to send in
-        {
-            contract.setApproved(true);
-        }
-        else
-        {
-            contract.setApproved(false);
-        }
         contractService.createContract(contract);
 
         return new ResponseEntity<String>("Create request successful.", HttpStatus.OK);

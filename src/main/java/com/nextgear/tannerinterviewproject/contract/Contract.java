@@ -17,17 +17,17 @@ public class Contract implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "contractId", nullable = false, updatable = false)
+    @Column(name = "contract_id", nullable = false, updatable = false)
     private Long contractId;
     @Column(name = "name") 
     private String name;
-    @Column(name = "businessNumber") 
+    @Column(name = "business_number") 
     private int businessNumber;
-    @Column(name = "amountRequested")
+    @Column(name = "amount_requested")
     private float amountRequested;
-    @Column(name = "contractApproved")
+    @Column(name = "contract_approved")
     private boolean contractApproved;
-    @Column(name = "contractActivationDate")
+    @Column(name = "contract_activation_date")
     private Date contractActivationDate;
 
     public Contract() 
@@ -94,10 +94,5 @@ public class Contract implements Serializable
     public void setApproved(Boolean approved)
     {
         this.contractApproved = approved;
-    }
-
-    public void setContractActivationDate(Date date)
-    {
-
     }
 }

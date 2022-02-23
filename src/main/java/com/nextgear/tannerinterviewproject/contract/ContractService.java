@@ -1,6 +1,4 @@
 package com.nextgear.tannerinterviewproject.contract;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +12,7 @@ public class ContractService
 
     public List<Contract> getApprovedContracts()
     {
-        List<Contract> contracts = new ArrayList<>();
-        List<Contract> approvedContract = new ArrayList<>();
-        contractRepository.findAll().forEach(contracts::add);
-        for(Contract contract : contracts)
-        {
-            if(contract.isContractApproved())
-            {
-                approvedContract.add(contract);
-            }
-        }
-        return contracts;
-        //return  contractRepository.findApprovedContracts();
+        return  contractRepository.findApprovedContracts();
     }
 
     public Contract getContract(Long id)
@@ -42,10 +29,8 @@ public class ContractService
 
     public void updateContract(Contract contract)
     {
-    //     if(contract.getContractId())
-    //     {
-            contractRepository.save(contract);
-    //    }
+        contractRepository.save(contract);
+
 
     }
 

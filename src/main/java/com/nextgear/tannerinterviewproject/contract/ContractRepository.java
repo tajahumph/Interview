@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ContractRepository extends CrudRepository<Contract, Long> {
-    @Query(value = "Select * FROM contracts WHERE contractApproved = true", nativeQuery = true)
+    @Query(value = "Select * FROM contracts WHERE contract_approved = true", nativeQuery = true)
     List<Contract> findApprovedContracts();
 }
