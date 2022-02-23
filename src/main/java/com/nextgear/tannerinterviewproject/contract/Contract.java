@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
 
+
+
 @Entity
 @Table(name = "contracts")
 public class Contract implements Serializable
@@ -23,10 +25,10 @@ public class Contract implements Serializable
     private int businessNumber;
     @Column(name = "amountRequested")
     private float amountRequested;
-    @Column(name = "contractApproved", updatable = false)
+    @Column(name = "contractApproved")
     private boolean contractApproved;
-    @Column(name = "contractActivationDate", updatable = false)
-    private String contractActivationDate;
+    @Column(name = "contractActivationDate")
+    private Date contractActivationDate;
 
     public Contract() 
     {
@@ -34,25 +36,14 @@ public class Contract implements Serializable
         this.businessNumber = 0;
         this.amountRequested = 0;
         this.contractApproved = false;
-        this.contractActivationDate = "";
     }
 
-    public Contract(String name, int businessNumber, int amountRequested)
+    public Contract(String enteredName, int enteredBusinessNumber, Float enteredAmountRequested)
     {
-        this.name = name;
-        this.businessNumber = businessNumber;
-        this.amountRequested = amountRequested;
-        if(this.amountRequested < 50000)
-        {
-            Date currentDate = new Date();
-            this.contractActivationDate = currentDate.toString();
-            this.contractApproved = true;
-        }
-        else
-        {
-            this.contractActivationDate = "";
-            this.contractApproved = false;
-        }
+        this.name = enteredName;
+        this.businessNumber = enteredBusinessNumber;
+        this.amountRequested = enteredAmountRequested;
+        System.out.println(enteredAmountRequested);
 
     }
 
@@ -70,27 +61,43 @@ public class Contract implements Serializable
     {
         return businessNumber;
     }
-    public float getAmountRequested() {
+    public float getAmountRequested() 
+    {
         return amountRequested;
     }
 
-    public boolean isContractApproved() {
+    public boolean isContractApproved() 
+    {
         return contractApproved;
     }
 
-    public String getContractActivationDate() {
+    public Date getContractActivationDate() 
+    {
         return contractActivationDate;
     }
 
-    public void setName(String name) {
+    public void setName(String name) 
+    {
         this.name = name;
     }
 
-    public void setBusinessNumber(int businessNumber) {
+    public void setBusinessNumber(int businessNumber) 
+    {
         this.businessNumber = businessNumber;
     }
 
-    public void setAmountRequested(int amountRequested) {
+    public void setAmountRequested(int amountRequested) 
+    {
         this.amountRequested = amountRequested;
-}
+    }
+
+    public void setApproved(Boolean approved)
+    {
+        this.contractApproved = approved;
+    }
+
+    public void setContractActivationDate(Date date)
+    {
+
+    }
 }

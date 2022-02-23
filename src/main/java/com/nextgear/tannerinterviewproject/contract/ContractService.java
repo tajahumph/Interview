@@ -40,9 +40,13 @@ public class ContractService
         System.out.println(contract1.getName());
     }
 
-    public void updateContract(Contract contract, Long id)
+    public void updateContract(Contract contract)
     {
-        contractRepository.save(contract);
+    //     if(contract.getContractId())
+    //     {
+            contractRepository.save(contract);
+    //    }
+
     }
 
     public void deleteContract(Long id)
