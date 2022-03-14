@@ -56,7 +56,7 @@ public class ContractController {
     {
         try{
             contractService.deleteContract(id);
-            return new ResponseEntity<String>(String.format("Contract %L successfully deleted", id), HttpStatus.OK);
+            return new ResponseEntity<String>(String.format("Contract %s successfully deleted", id), HttpStatus.OK);
     
         }
         catch(Exception e)
